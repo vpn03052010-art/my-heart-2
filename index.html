@@ -1,0 +1,1066 @@
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I LOVE U</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #05040b;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* СТАРТОВЫЙ ЭКРАН */
+
+#intro {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 2s ease, visibility 2s ease;
+}
+
+#intro.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#startButton {
+    background: none;
+    border: none;
+    color: #f5b5e8;
+    font-family: Arial, sans-serif;
+    font-size: clamp(25px, 5vw, 48px);
+    letter-spacing: 3px;
+    cursor: pointer;
+    text-shadow:
+        0 0 5px #ff9de8,
+        0 0 15px #ff62d2,
+        0 0 35px #e83bbf,
+        0 0 65px #b52c9c;
+    animation: startGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes startGlow {
+    0%, 100% { opacity: 0.7; }
+    50% {
+        opacity: 1;
+        text-shadow:
+            0 0 8px #fff,
+            0 0 20px #ff9de8,
+            0 0 45px #ff62d2,
+            0 0 75px #e83bbf;
+    }
+}
+
+/* ОСНОВНАЯ ОТКРЫТКА */
+
+#main {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 2s ease, visibility 2s ease;
+}
+
+#main.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ЗВЁЗДЫ */
+
+#stars {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* БОЛЬШОЕ СЕРДЦЕ */
+
+svg.main-svg {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: min(72vw, 780px);
+    height: auto;
+    overflow: visible;
+}
+
+/* НАДПИСИ */
+
+.love {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    filter: url(#glow);
+}
+
+/* ФОТОГРАФИИ */
+
+.photo-card {
+    position: fixed;
+    z-index: 2;
+    width: clamp(100px, 13vw, 165px);
+    padding: 7px;
+    background: rgba(20, 8, 38, 0.85);
+    border: 1px solid #bd70ff;
+    border-radius: 5px;
+    box-shadow:
+        0 0 8px #a044ff,
+        0 0 18px rgba(160, 68, 255, 0.8),
+        0 0 35px rgba(130, 40, 255, 0.35);
+    animation: photoFloat 5s ease-in-out infinite;
+}
+
+.photo-card.left {
+    top: 50%;
+    left: clamp(12px, 4vw, 65px);
+    transform: translateY(-50%) rotate(-7deg);
+}
+
+.photo-card.right {
+    top: 50%;
+    right: clamp(12px, 4vw, 65px);
+    transform: translateY(-50%) rotate(7deg);
+    animation-delay: -2.5s;
+}
+
+.photo-card.top {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    animation-delay: -1s;
+}
+
+.photo-card.bottom {
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%) rotate(4deg);
+    animation-delay: -3s;
+}
+
+.photo-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 2px;
+    filter: saturate(0.85) contrast(1.05);
+}
+
+.photo-caption {
+    text-align: center;
+    color: #e8c5ff;
+    font-family: Arial, sans-serif;
+    font-size: clamp(10px, 1.1vw, 14px);
+    letter-spacing: 1px;
+    padding: 8px 2px 4px;
+    text-shadow:
+        0 0 5px #bd70ff,
+        0 0 12px #a044ff,
+        0 0 22px #8b35ff;
+    white-space: nowrap;
+}
+
+@keyframes photoFloat {
+    0%, 100% { margin-top: 0; }
+    50% { margin-top: -7px; }
+}
+
+/* ЧЕЛОВЕЧКИ */
+
+.person {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: personFloat 3s ease-in-out infinite;
+}
+
+.person.right-person {
+    animation-delay: -1.5s;
+}
+
+@keyframes personFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.laugh {
+    opacity: 0;
+    animation: laugh 5s ease-in-out infinite;
+}
+
+.laugh.second {
+    animation-delay: 2.5s;
+}
+
+@keyframes laugh {
+    0%, 15%, 100% {
+        opacity: 0;
+        transform: translateY(5px) scale(0.7);
+    }
+    20%, 32% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    38% {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.8);
+    }
+}
+
+.heart-pop {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: heartPop 3s ease-in-out infinite;
+}
+
+@keyframes heartPop {
+    0%, 100% {
+        opacity: 0.55;
+        transform: scale(0.85);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+/* СЕРДЕЧКИ ИЗ ТОЧЕК */
+
+.dotted-heart circle {
+    fill: #ff9cde;
+    opacity: 0.2;
+    filter: url(#pinkGlow);
+    animation: dotRun 2.5s ease-in-out infinite;
+    animation-delay: var(--delay);
+}
+
+@keyframes dotRun {
+    0%, 100% {
+        opacity: 0.18;
+        r: 1.2;
+    }
+    35% {
+        opacity: 1;
+        r: 2.5;
+    }
+    65% {
+        opacity: 0.35;
+        r: 1.5;
+    }
+}
+
+/* САКУРА */
+
+.sakura {
+    opacity: 0.85;
+    filter: url(#pinkGlow);
+    animation: sakuraGlow 4s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+@keyframes sakuraGlow {
+    0%, 100% { opacity: 0.65; }
+    50% { opacity: 1; }
+}
+
+/* ДЕКОР В ЧЕТЫРЁХ УГЛАХ */
+
+.corner-decor {
+    position: fixed;
+    z-index: 1;
+    width: clamp(105px, 15vw, 205px);
+    height: auto;
+    pointer-events: none;
+    overflow: visible;
+    opacity: .78;
+    filter: drop-shadow(0 0 8px rgba(255, 126, 205, .35));
+}
+
+.corner-decor.top-left {
+    top: 2.5%;
+    left: 1.5%;
+    transform: rotate(-8deg);
+}
+
+.corner-decor.top-right {
+    top: 2.5%;
+    right: 1.5%;
+    transform: rotate(8deg);
+}
+
+.corner-decor.bottom-left {
+    bottom: 2.5%;
+    left: 1.5%;
+    transform: rotate(8deg);
+}
+
+.corner-decor.bottom-right {
+    bottom: 2.5%;
+    right: 1.5%;
+    transform: rotate(-8deg);
+}
+
+.corner-dot {
+    fill: #ff9cde;
+    opacity: .18;
+    filter: drop-shadow(0 0 3px #ff62c8);
+    animation: cornerDotRun 2.6s ease-in-out infinite;
+    animation-delay: var(--delay);
+}
+
+@keyframes cornerDotRun {
+    0%, 100% { opacity: .18; }
+    35% { opacity: 1; }
+    65% { opacity: .35; }
+}
+
+.corner-sakura {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: sakuraGlow 4s ease-in-out infinite;
+}
+
+.corner-star {
+    fill: #e8d7ff;
+    animation: cornerTwinkle 2.8s ease-in-out infinite;
+}
+
+.corner-star:nth-of-type(2n) {
+    animation-delay: -1.3s;
+}
+
+@keyframes cornerTwinkle {
+    0%, 100% { opacity: .25; }
+    50% { opacity: 1; }
+}
+
+/* ТЕЛЕФОНЫ */
+
+@media (max-width: 650px) {
+    svg.main-svg {
+        width: 82vw;
+    }
+
+    .photo-card {
+        width: 17vw;
+        min-width: 75px;
+        padding: 4px;
+    }
+
+    .photo-card.left { left: 3px; }
+    .photo-card.right { right: 3px; }
+    .photo-card.top { top: 2%; }
+    .photo-card.bottom { bottom: 2%; }
+
+    .photo-caption {
+        font-size: 8px;
+        letter-spacing: 0;
+        padding: 5px 0 3px;
+    }
+
+    .corner-decor {
+        width: clamp(68px, 17vw, 112px);
+        opacity: .65;
+    }
+
+    .corner-decor.top-left,
+    .corner-decor.top-right {
+        top: 1%;
+    }
+
+    .corner-decor.bottom-left,
+    .corner-decor.bottom-right {
+        bottom: 1%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- СТАРТОВЫЙ ЭКРАН -->
+
+<div id="intro">
+    <button id="startButton">ТЫК...&lt;3</button>
+</div>
+
+<!-- МУЗЫКА -->
+
+<audio id="music" src="music.mp3" loop preload="auto"></audio>
+
+<!-- ОСНОВНАЯ ОТКРЫТКА -->
+
+<div id="main">
+
+<canvas id="stars"></canvas>
+
+<!-- ДЕКОР В УГЛАХ ЭКРАНА -->
+
+<!-- ВЕРХНИЙ ЛЕВЫЙ УГОЛ — САКУРА -->
+
+<svg class="corner-decor top-left" viewBox="0 0 180 150" aria-hidden="true">
+    <g class="corner-sakura" fill="none" stroke="#b77a9d" stroke-width="2.5" stroke-linecap="round">
+        <path d="M8 125 Q48 100 72 66 Q100 28 145 16"/>
+        <path d="M49 96 Q30 65 16 64 M77 62 Q105 67 119 48 M104 37 Q91 12 76 8"/>
+    </g>
+
+    <g class="corner-sakura">
+        <g transform="translate(16 64)">
+            <ellipse cy="-8" rx="5" ry="9" fill="#ffb5d8"/>
+            <ellipse cx="8" cy="-2" rx="5" ry="9" fill="#f69bc9" transform="rotate(72 8 -2)"/>
+            <ellipse cx="5" cy="7" rx="5" ry="9" fill="#ffc1df" transform="rotate(144 5 7)"/>
+            <ellipse cx="-5" cy="7" rx="5" ry="9" fill="#f69bc9" transform="rotate(216 -5 7)"/>
+            <ellipse cx="-8" cy="-2" rx="5" ry="9" fill="#ffc1df" transform="rotate(288 -8 -2)"/>
+            <circle r="3" fill="#ffe5a8"/>
+        </g>
+
+        <g transform="translate(119 48) scale(.8)">
+            <ellipse cy="-8" rx="5" ry="9" fill="#ffb5d8"/>
+            <ellipse cx="8" cy="-2" rx="5" ry="9" fill="#f69bc9" transform="rotate(72 8 -2)"/>
+            <ellipse cx="5" cy="7" rx="5" ry="9" fill="#ffc1df" transform="rotate(144 5 7)"/>
+            <ellipse cx="-5" cy="7" rx="5" ry="9" fill="#f69bc9" transform="rotate(216 -5 7)"/>
+            <ellipse cx="-8" cy="-2" rx="5" ry="9" fill="#ffc1df" transform="rotate(288 -8 -2)"/>
+            <circle r="3" fill="#ffe5a8"/>
+        </g>
+    </g>
+
+    <g class="corner-star">
+        <path d="M145 82 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/>
+    </g>
+
+    <g class="corner-star">
+        <path d="M42 20 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/>
+    </g>
+
+    <circle cx="92" cy="111" r="2" fill="#ffd1eb"/>
+    <circle cx="160" cy="35" r="1.7" fill="#e8d7ff"/>
+</svg>
+
+<!-- ВЕРХНИЙ ПРАВЫЙ УГОЛ — СЕРДЦЕ -->
+
+<svg class="corner-decor top-right" viewBox="0 0 180 150" aria-hidden="true">
+    <g>
+        <circle class="corner-dot" style="--delay:0s" cx="88" cy="34" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.08s" cx="102" cy="23" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.16s" cx="119" cy="22" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.24s" cx="135" cy="31" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.32s" cx="144" cy="46" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.40s" cx="141" cy="64" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.48s" cx="126" cy="80" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.56s" cx="108" cy="96" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.64s" cx="90" cy="111" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.72s" cx="72" cy="96" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.80s" cx="54" cy="80" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.88s" cx="39" cy="64" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.96s" cx="36" cy="46" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1.04s" cx="45" cy="31" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1.12s" cx="61" cy="22" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1.20s" cx="76" cy="23" r="2.1"/>
+    </g>
+
+    <path d="M20 117 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" class="corner-star"/>
+    <path d="M154 112 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" class="corner-star"/>
+
+    <circle cx="25" cy="32" r="2" fill="#f7c9ff"/>
+    <circle cx="164" cy="82" r="2" fill="#f7c9ff"/>
+</svg>
+
+<!-- НИЖНИЙ ЛЕВЫЙ УГОЛ — СЕРДЦЕ -->
+
+<svg class="corner-decor bottom-left" viewBox="0 0 180 150" aria-hidden="true">
+    <g>
+        <circle class="corner-dot" style="--delay:-.2s" cx="88" cy="34" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.28s" cx="102" cy="23" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.36s" cx="119" cy="22" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.44s" cx="135" cy="31" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.52s" cx="144" cy="46" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.60s" cx="141" cy="64" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.68s" cx="126" cy="80" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.76s" cx="108" cy="96" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.84s" cx="90" cy="111" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-.92s" cx="72" cy="96" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1s" cx="54" cy="80" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1.08s" cx="39" cy="64" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1.16s" cx="36" cy="46" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1.24s" cx="45" cy="31" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1.32s" cx="61" cy="22" r="2.1"/>
+        <circle class="corner-dot" style="--delay:-1.40s" cx="76" cy="23" r="2.1"/>
+    </g>
+
+    <path d="M20 117 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" class="corner-star"/>
+    <path d="M154 112 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" class="corner-star"/>
+
+    <circle cx="25" cy="32" r="2" fill="#f7c9ff"/>
+    <circle cx="164" cy="82" r="2" fill="#f7c9ff"/>
+</svg>
+
+<!-- НИЖНИЙ ПРАВЫЙ УГОЛ — САКУРА -->
+
+<svg class="corner-decor bottom-right" viewBox="0 0 180 150" aria-hidden="true">
+    <g class="corner-sakura" fill="none" stroke="#b77a9d" stroke-width="2.5" stroke-linecap="round">
+        <path d="M8 125 Q48 100 72 66 Q100 28 145 16"/>
+        <path d="M49 96 Q30 65 16 64 M77 62 Q105 67 119 48 M104 37 Q91 12 76 8"/>
+    </g>
+
+    <g class="corner-sakura">
+        <g transform="translate(16 64)">
+            <ellipse cy="-8" rx="5" ry="9" fill="#ffb5d8"/>
+            <ellipse cx="8" cy="-2" rx="5" ry="9" fill="#f69bc9" transform="rotate(72 8 -2)"/>
+            <ellipse cx="5" cy="7" rx="5" ry="9" fill="#ffc1df" transform="rotate(144 5 7)"/>
+            <ellipse cx="-5" cy="7" rx="5" ry="9" fill="#f69bc9" transform="rotate(216 -5 7)"/>
+            <ellipse cx="-8" cy="-2" rx="5" ry="9" fill="#ffc1df" transform="rotate(288 -8 -2)"/>
+            <circle r="3" fill="#ffe5a8"/>
+        </g>
+
+        <g transform="translate(119 48) scale(.8)">
+            <ellipse cy="-8" rx="5" ry="9" fill="#ffb5d8"/>
+            <ellipse cx="8" cy="-2" rx="5" ry="9" fill="#f69bc9" transform="rotate(72 8 -2)"/>
+            <ellipse cx="5" cy="7" rx="5" ry="9" fill="#ffc1df" transform="rotate(144 5 7)"/>
+            <ellipse cx="-5" cy="7" rx="5" ry="9" fill="#f69bc9" transform="rotate(216 -5 7)"/>
+            <ellipse cx="-8" cy="-2" rx="5" ry="9" fill="#ffc1df" transform="rotate(288 -8 -2)"/>
+            <circle r="3" fill="#ffe5a8"/>
+        </g>
+    </g>
+
+    <path d="M145 82 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" class="corner-star"/>
+    <path d="M42 20 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" class="corner-star"/>
+
+    <circle cx="92" cy="111" r="2" fill="#ffd1eb"/>
+    <circle cx="160" cy="35" r="1.7" fill="#e8d7ff"/>
+</svg>
+
+<!-- ФОТОГРАФИИ -->
+
+<div class="photo-card left">
+    <img src="Photo%201.jpg" alt="Photo 1">
+    <div class="photo-caption">soo cute&lt;3</div>
+</div>
+
+<div class="photo-card right">
+    <img src="Photo%202.jpg" alt="Photo 2">
+    <div class="photo-caption">veryy lovely #|#</div>
+</div>
+
+<div class="photo-card top">
+    <img src="Photo%203.jpg" alt="Photo 3">
+    <div class="photo-caption">durachok)</div>
+</div>
+
+<div class="photo-card bottom">
+    <img src="Photo%204.jpg" alt="Photo 4">
+    <div class="photo-caption">besish "="</div>
+</div>
+
+<!-- СЕРДЦЕ -->
+
+<svg class="main-svg" viewBox="0 0 600 540">
+
+<defs>
+    <filter id="glow">
+        <feGaussianBlur stdDeviation="1.5" result="blur"/>
+        <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+    </filter>
+
+    <filter id="pinkGlow">
+        <feGaussianBlur stdDeviation="2.5" result="blur"/>
+        <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+    </filter>
+
+    <filter id="softGlow">
+        <feGaussianBlur stdDeviation="2" result="blur"/>
+        <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+    </filter>
+</defs>
+
+<g id="heart"></g>
+
+<!-- СЕРДЕЧКИ ИЗ ТОЧЕК -->
+
+<g id="dottedHearts"></g>
+
+<!-- САКУРА -->
+
+<g class="sakura" transform="translate(150 355) rotate(-18)">
+
+    <path d="M0 55 Q25 35 45 10 Q58 -5 78 -18"
+          fill="none" stroke="#b77a9d"
+          stroke-width="3" stroke-linecap="round"/>
+
+    <path d="M37 22 Q30 0 18 -8"
+          fill="none" stroke="#b77a9d" stroke-width="2"/>
+
+    <path d="M51 5 Q72 12 82 0"
+          fill="none" stroke="#b77a9d" stroke-width="2"/>
+
+    <path d="M17 43 Q3 25 -7 22"
+          fill="none" stroke="#b77a9d" stroke-width="2"/>
+
+    <g transform="translate(18 -8)">
+        <ellipse cx="0" cy="-8" rx="5" ry="9" fill="#ffb5d8"/>
+        <ellipse cx="8" cy="-2" rx="5" ry="9" fill="#f69bc9" transform="rotate(72 8 -2)"/>
+        <ellipse cx="5" cy="7" rx="5" ry="9" fill="#ffc1df" transform="rotate(144 5 7)"/>
+        <ellipse cx="-5" cy="7" rx="5" ry="9" fill="#f69bc9" transform="rotate(216 -5 7)"/>
+        <ellipse cx="-8" cy="-2" rx="5" ry="9" fill="#ffc1df" transform="rotate(288 -8 -2)"/>
+        <circle cx="0" cy="0" r="3" fill="#ffe5a8"/>
+    </g>
+
+    <g transform="translate(78 -18) scale(.8)">
+        <ellipse cx="0" cy="-8" rx="5" ry="9" fill="#ffb5d8"/>
+        <ellipse cx="8" cy="-2" rx="5" ry="9" fill="#f69bc9" transform="rotate(72 8 -2)"/>
+        <ellipse cx="5" cy="7" rx="5" ry="9" fill="#ffc1df" transform="rotate(144 5 7)"/>
+        <ellipse cx="-5" cy="7" rx="5" ry="9" fill="#f69bc9" transform="rotate(216 -5 7)"/>
+        <ellipse cx="-8" cy="-2" rx="5" ry="9" fill="#ffc1df" transform="rotate(288 -8 -2)"/>
+        <circle cx="0" cy="0" r="3" fill="#ffe5a8"/>
+    </g>
+
+    <g transform="translate(-7 22) scale(.7)">
+        <ellipse cx="0" cy="-8" rx="5" ry="9" fill="#ffb5d8"/>
+        <ellipse cx="8" cy="-2" rx="5" ry="9" fill="#f69bc9" transform="rotate(72 8 -2)"/>
+        <ellipse cx="5" cy="7" rx="5" ry="9" fill="#ffc1df" transform="rotate(144 5 7)"/>
+        <ellipse cx="-5" cy="7" rx="5" ry="9" fill="#f69bc9" transform="rotate(216 -5 7)"/>
+        <ellipse cx="-8" cy="-2" rx="5" ry="9" fill="#ffc1df" transform="rotate(288 -8 -2)"/>
+        <circle cx="0" cy="0" r="3" fill="#ffe5a8"/>
+    </g>
+</g>
+
+<!-- ЧЕЛОВЕЧКИ -->
+
+<g class="people" filter="url(#softGlow)"
+   transform="translate(300 300) scale(.72) translate(-300 -300)">
+
+    <!-- ЛЕВЫЙ ЧЕЛОВЕЧЕК -->
+
+    <g class="person">
+        <path d="M225 338 Q218 350 225 356"
+              fill="none" stroke="#d9aaff"
+              stroke-width="5" stroke-linecap="round"/>
+
+        <path d="M245 338 Q252 350 245 356"
+              fill="none" stroke="#d9aaff"
+              stroke-width="5" stroke-linecap="round"/>
+
+        <path d="M216 305 Q213 290 232 288
+                 Q251 290 254 305
+                 L250 340 Q233 348 217 340 Z"
+              fill="#a66bd4" stroke="#e5c4ff"
+              stroke-width="2"/>
+
+        <path d="M252 307 Q263 310 263 321"
+              fill="none" stroke="#e8c8ff"
+              stroke-width="6" stroke-linecap="round"/>
+
+        <circle cx="233" cy="270" r="22"
+                fill="#f3c9bd" stroke="#ffe0e8" stroke-width="2"/>
+
+        <path d="M211 270 Q208 247 230 246
+                 Q252 245 255 265
+                 Q245 255 236 258
+                 Q225 252 211 270 Z"
+              fill="#443052"/>
+
+        <path d="M213 264 Q205 275 212 281"
+              fill="none" stroke="#443052"
+              stroke-width="7" stroke-linecap="round"/>
+
+        <circle cx="226" cy="271" r="1.8" fill="#493044"/>
+        <circle cx="240" cy="271" r="1.8" fill="#493044"/>
+
+        <path d="M228 280 Q233 285 239 279"
+              fill="none" stroke="#a85c76"
+              stroke-width="1.8" stroke-linecap="round"/>
+
+        <ellipse cx="220" cy="278" rx="4" ry="2"
+                 fill="#ed9ba8" opacity="0.7"/>
+        <ellipse cx="246" cy="278" rx="4" ry="2"
+                 fill="#ed9ba8" opacity="0.7"/>
+
+        <rect x="250" y="310" width="18" height="28"
+              rx="4" fill="#272039"
+              stroke="#e6c4ff" stroke-width="1.5"/>
+
+        <rect x="253" y="314" width="12" height="18"
+              rx="2" fill="#d7b4ff"/>
+
+        <circle cx="259" cy="335" r="1" fill="#fff"/>
+    </g>
+
+    <!-- ПРАВЫЙ ЧЕЛОВЕЧЕК -->
+
+    <g class="person right-person">
+        <path d="M355 338 Q348 350 355 356"
+              fill="none" stroke="#d9aaff"
+              stroke-width="5" stroke-linecap="round"/>
+
+        <path d="M375 338 Q382 350 375 356"
+              fill="none" stroke="#d9aaff"
+              stroke-width="5" stroke-linecap="round"/>
+
+        <path d="M346 305 Q349 290 368 288
+                 Q387 290 384 305
+                 L383 340 Q367 348 350 340 Z"
+              fill="#7961b9" stroke="#e5c4ff"
+              stroke-width="2"/>
+
+        <path d="M346 307 Q337 310 337 321"
+              fill="none" stroke="#e8c8ff"
+              stroke-width="6" stroke-linecap="round"/>
+
+        <circle cx="367" cy="270" r="22"
+                fill="#eac1aa" stroke="#ffe0d0" stroke-width="2"/>
+
+        <path d="M345 266 Q343 245 367 245
+                 Q390 246 389 270
+                 Q380 257 368 258
+                 Q355 255 345 266 Z"
+              fill="#30243c"/>
+
+        <path d="M386 260 Q397 270 386 282"
+              fill="none" stroke="#30243c"
+              stroke-width="7" stroke-linecap="round"/>
+
+        <circle cx="360" cy="271" r="1.8" fill="#493044"/>
+        <circle cx="374" cy="271" r="1.8" fill="#493044"/>
+
+        <path d="M359 279 Q366 285 373 279"
+              fill="none" stroke="#a85c76"
+              stroke-width="1.8" stroke-linecap="round"/>
+
+        <ellipse cx="354" cy="278" rx="4" ry="2"
+                 fill="#ed9ba8" opacity="0.7"/>
+        <ellipse cx="380" cy="278" rx="4" ry="2"
+                 fill="#ed9ba8" opacity="0.7"/>
+
+        <rect x="332" y="310" width="18" height="28"
+              rx="4" fill="#272039"
+              stroke="#e6c4ff" stroke-width="1.5"/>
+
+        <rect x="335" y="314" width="12" height="18"
+              rx="2" fill="#d7b4ff"/>
+
+        <circle cx="341" cy="335" r="1" fill="#fff"/>
+    </g>
+
+    <!-- СООБЩЕНИЯ И СМЕХ -->
+
+    <g class="laugh">
+        <rect x="266" y="235" width="47" height="23"
+              rx="10" fill="#e9caff"/>
+
+        <path d="M279 256 L275 263 L288 257" fill="#e9caff"/>
+
+        <text x="289" y="250"
+              text-anchor="middle"
+              font-size="10"
+              font-family="Arial"
+              fill="#754b91">хе-хе</text>
+    </g>
+
+    <g class="laugh second">
+        <rect x="300" y="225" width="45" height="23"
+              rx="10" fill="#e9caff"/>
+
+        <path d="M332 246 L338 253 L337 245" fill="#e9caff"/>
+
+        <text x="322" y="240"
+              text-anchor="middle"
+              font-size="10"
+              font-family="Arial"
+              fill="#754b91">ахах</text>
+    </g>
+
+    <g class="heart-pop">
+        <path d="M300 278
+                 C290 267 278 280 300 296
+                 C322 280 310 267 300 278 Z"
+              fill="#f2a9e7"/>
+    </g>
+
+    <text x="211" y="239" font-size="13"
+          fill="#e8baff">✦</text>
+
+    <text x="382" y="300" font-size="12"
+          fill="#e8baff">♡</text>
+
+</g>
+</svg>
+
+</div>
+
+<script>
+
+// НАЖАТИЕ НА ТЫК
+
+const intro = document.getElementById("intro");
+const main = document.getElementById("main");
+const music = document.getElementById("music");
+
+document.getElementById("startButton").addEventListener("click", () => {
+
+    // Показываем открытку
+    main.classList.add("show");
+
+    // Убираем стартовый экран
+    intro.classList.add("hide");
+
+    // Запускаем музыку именно после нажатия
+    music.volume = 0.45;
+
+    music.play().catch(error => {
+        console.log("Музыка не запустилась:", error);
+    });
+
+});
+
+
+// ЗВЁЗДНОЕ НЕБО
+
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+let stars = [];
+
+function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = innerWidth * dpr;
+    canvas.height = innerHeight * dpr;
+
+    canvas.style.width = innerWidth + "px";
+    canvas.style.height = innerHeight + "px";
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = [];
+
+    for (let i = 0; i < 180; i++) {
+        stars.push({
+            x: Math.random() * innerWidth,
+            y: Math.random() * innerHeight,
+            size: Math.random() * 1.4 + 0.3,
+            opacity: Math.random() * 0.5 + 0.15,
+            speed: Math.random() * 0.015 + 0.003,
+            phase: Math.random() * Math.PI * 2
+        });
+    }
+}
+
+window.addEventListener("resize", resize);
+resize();
+
+function drawStars() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    const time = Date.now() * 0.001;
+
+    stars.forEach(star => {
+        const opacity = star.opacity *
+            (0.65 + 0.35 * Math.sin(time * star.speed * 30 + star.phase));
+
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+
+        ctx.fillStyle = `rgba(210, 205, 255, ${opacity})`;
+        ctx.fill();
+    });
+
+    requestAnimationFrame(drawStars);
+}
+
+drawStars();
+
+
+// БОЛЬШОЕ СЕРДЦЕ
+
+const group = document.getElementById("heart");
+const points = [];
+
+function heart(t) {
+    return {
+        x: 300 + 225 * Math.pow(Math.sin(t), 3),
+        y: 260 - (
+            90 * Math.cos(t) -
+            35 * Math.cos(2*t) -
+            15 * Math.cos(3*t) -
+            5 * Math.cos(4*t)
+        )
+    };
+}
+
+const steps = 1500;
+
+for (let i = 0; i < steps; i++) {
+    points.push(heart(i / steps * Math.PI * 2));
+}
+
+let distances = [0];
+
+for (let i = 1; i < points.length; i++) {
+    distances.push(
+        distances[i-1] +
+        Math.hypot(
+            points[i].x - points[i-1].x,
+            points[i].y - points[i-1].y
+        )
+    );
+}
+
+const totalLength = distances[distances.length - 1];
+
+function getPoint(distance) {
+    distance = (distance % totalLength + totalLength) % totalLength;
+
+    let index = 0;
+
+    while (
+        index < distances.length - 1 &&
+        distances[index + 1] < distance
+    ) {
+        index++;
+    }
+
+    const a = points[index];
+    const b = points[(index + 1) % points.length];
+
+    const part =
+        (distance - distances[index]) /
+        (distances[index + 1] - distances[index] || 1);
+
+    return {
+        x: a.x + (b.x - a.x) * part,
+        y: a.y + (b.y - a.y) * part
+    };
+}
+
+const count = 95;
+const texts = [];
+
+for (let i = 0; i < count; i++) {
+    const text = document.createElementNS(
+        "http://www.w3.org/2000/svg", "text"
+    );
+
+    text.textContent = "I LOVE U";
+    text.setAttribute("class", "love");
+
+    group.appendChild(text);
+    texts.push(text);
+}
+
+let time = 0;
+
+function animate() {
+    time += 0.12;
+
+    texts.forEach((text, i) => {
+        const distance =
+            (i * totalLength / count + time) % totalLength;
+
+        const p = getPoint(distance);
+
+        const hue = 320 +
+            18 * Math.sin(i * 0.12 + time * 0.01);
+
+        text.setAttribute(
+            "transform",
+            `translate(${p.x}, ${p.y})`
+        );
+
+        text.style.fill = `hsl(${hue}, 48%, 77%)`;
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+
+// МАЛЕНЬКИЕ СЕРДЕЧКИ ИЗ БЕГУЩИХ ТОЧЕК
+
+const dottedHearts = document.getElementById("dottedHearts");
+
+function createDottedHeart(centerX, centerY, scale) {
+
+    const heartGroup = document.createElementNS(
+        "http://www.w3.org/2000/svg", "g"
+    );
+
+    heartGroup.setAttribute("class", "dotted-heart");
+
+    const dotCount = 42;
+
+    for (let i = 0; i < dotCount; i++) {
+
+        const t = i / dotCount * Math.PI * 2;
+
+        const x = 16 * Math.pow(Math.sin(t), 3);
+
+        const y = -(
+            13 * Math.cos(t) -
+            5 * Math.cos(2*t) -
+            2 * Math.cos(3*t) -
+            Math.cos(4*t)
+        );
+
+        const dot = document.createElementNS(
+            "http://www.w3.org/2000/svg", "circle"
+        );
+
+        dot.setAttribute("cx", centerX + x * scale);
+        dot.setAttribute("cy", centerY + y * scale);
+        dot.setAttribute("r", 1.7);
+
+        // Каждая точка загорается немного позже предыдущей
+        dot.style.setProperty("--delay", `${-i * 0.06}s`);
+
+        heartGroup.appendChild(dot);
+    }
+
+    dottedHearts.appendChild(heartGroup);
+}
+
+// ДВА СЕРДЕЧКА ПО БОКАМ ОТ ЧЕЛОВЕЧКОВ
+
+createDottedHeart(165, 275, 0.8);
+createDottedHeart(435, 275, 0.8);
+
+</script>
+
+</body>
+</html>
+```
